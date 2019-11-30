@@ -18,7 +18,7 @@
   * 可查看Apk组成、大小、占比等
   * 查看Dex文件组成
   * 可对比Apk
-* android-classyshark，二进制检查工具
-  * [Github传送门](https://github.com/google/android-classyshark)
+* [android-classyshark](https://github.com/google/android-classyshark)，二进制检查工具
   * 支持多种格式：Apk、Jar、Class、So等
   * 打开该jar，直接把apk拖入
+
