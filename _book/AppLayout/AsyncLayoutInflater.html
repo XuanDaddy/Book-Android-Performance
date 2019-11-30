@@ -1,0 +1,791 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>【三】AsyncLayoutInflater · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="X2C.html" />
+    
+    
+    <link rel="prev" href="如何获取界面布局耗时.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Android性能优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../AppLanuch/">
+            
+                <a href="../AppLanuch/">
+            
+                    
+                    App启动优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../AppLanuch/启动分类.html">
+            
+                <a href="../AppLanuch/启动分类.html">
+            
+                    
+                    【一】启动分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../AppLanuch/启动测量方式.html">
+            
+                <a href="../AppLanuch/启动测量方式.html">
+            
+                    
+                    【二】启动测量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../AppLanuch/启动优化工具.html">
+            
+                <a href="../AppLanuch/启动优化工具.html">
+            
+                    
+                    【三】启动优化工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../AppLanuch/启动优化方向.html">
+            
+                <a href="../AppLanuch/启动优化方向.html">
+            
+                    
+                    【四】启动优化方向
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../AppMerory/">
+            
+                <a href="../AppMerory/">
+            
+                    
+                    App内存优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../AppMerory/Memory-Profiler.html">
+            
+                <a href="../AppMerory/Memory-Profiler.html">
+            
+                    
+                    【一】Memory Profiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../AppMerory/Memory-Analyzer.html">
+            
+                <a href="../AppMerory/Memory-Analyzer.html">
+            
+                    
+                    【二】Memory Analyzer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../AppMerory/LeakCanary.html">
+            
+                <a href="../AppMerory/LeakCanary.html">
+            
+                    
+                    【三】LeakCanary
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../AppMerory/内存抖动.html">
+            
+                <a href="../AppMerory/内存抖动.html">
+            
+                    
+                    【四】内存抖动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../AppMerory/内存泄露.html">
+            
+                <a href="../AppMerory/内存泄露.html">
+            
+                    
+                    【五】内存泄露
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    App布局优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="Android布局加载原理.html">
+            
+                <a href="Android布局加载原理.html">
+            
+                    
+                    【一】Android布局加载原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="如何获取界面布局耗时.html">
+            
+                <a href="如何获取界面布局耗时.html">
+            
+                    
+                    【二】如何获取界面布局耗时
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.3" data-path="AsyncLayoutInflater.html">
+            
+                <a href="AsyncLayoutInflater.html">
+            
+                    
+                    【三】AsyncLayoutInflater
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="X2C.html">
+            
+                <a href="X2C.html">
+            
+                    
+                    【四】X2C
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="视图绘制优化.html">
+            
+                <a href="视图绘制优化.html">
+            
+                    
+                    【五】视图绘制优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../AppCarton/">
+            
+                <a href="../AppCarton/">
+            
+                    
+                    App卡顿优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../AppThread/">
+            
+                <a href="../AppThread/">
+            
+                    
+                    App线程优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../AppNetwork/">
+            
+                <a href="../AppNetwork/">
+            
+                    
+                    App网络优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../AppBattery/">
+            
+                <a href="../AppBattery/">
+            
+                    
+                    App电量优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../AppSmall/">
+            
+                <a href="../AppSmall/">
+            
+                    
+                    App瘦身优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../AppSmall/代码瘦身.html">
+            
+                <a href="../AppSmall/代码瘦身.html">
+            
+                    
+                    【一】代码瘦身
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../AppSmall/资源瘦身.html">
+            
+                <a href="../AppSmall/资源瘦身.html">
+            
+                    
+                    【二】资源瘦身
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../AppSmall/So瘦身.html">
+            
+                <a href="../AppSmall/So瘦身.html">
+            
+                    
+                    【三】So瘦身
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../AppStable/">
+            
+                <a href="../AppStable/">
+            
+                    
+                    App稳定性优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >【三】AsyncLayoutInflater</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x3010;&#x4E09;&#x3011;asynclayoutinflater">&#x3010;&#x4E09;&#x3011;AsyncLayoutInflater</h1>
+<h3 id="&#x5F02;&#x6B65;inflate">&#x5F02;&#x6B65;Inflate</h3>
+<ul>
+<li>WorkThread&#x52A0;&#x8F7D;&#x5E03;&#x5C40;&#xFF1B;</li>
+<li>&#x56DE;&#x8C03;&#x4E3B;&#x7EBF;&#x7A0B;&#xFF1B;</li>
+<li>&#x8282;&#x7EA6;&#x4E3B;&#x7EBF;&#x7A0B;&#x65F6;&#x95F4;&#xFF1B;</li>
+</ul>
+<h3 id="&#x4F7F;&#x7528;&#x65B9;&#x5F0F;">&#x4F7F;&#x7528;&#x65B9;&#x5F0F;</h3>
+<p>&#x4F7F;&#x7528;&#x6784;&#x9020;&#x65B9;&#x6CD5;&#x521B;&#x5EFA;,&#x8C03;&#x7528;inflate&#x65B9;&#x6CD5;&#xFF0C;&#x56DE;&#x8C03;&#x4E3B;&#x7EBF;&#x7A0B;&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">super</span>.onCreate(savedInstanceState);
+<span class="hljs-keyword">new</span> AsyncLayoutInflater(<span class="hljs-keyword">this</span>).inflate(R.layout.activity_main, <span class="hljs-keyword">null</span>,
+<span class="hljs-keyword">new</span> AsyncLayoutInflater.OnInflateFinishedListener() {
+  <span class="hljs-meta">@Override</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onInflateFinished</span><span class="hljs-params">(@NonNull View view, <span class="hljs-keyword">int</span> resid,@Nullable ViewGroup parent)</span> </span>{
+        setContentView(view);
+      }
+});
+</code></pre>
+<h3 id="&#x6E90;&#x7801;&#x89E3;&#x6790;">&#x6E90;&#x7801;&#x89E3;&#x6790;</h3>
+<ul>
+<li>&#x6784;&#x5EFA;&#x65B9;&#x6CD5;</li>
+</ul>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AsyncLayoutInflater</span><span class="hljs-params">(@NonNull Context context)</span> </span>{
+        mInflater = <span class="hljs-keyword">new</span> BasicInflater(context);
+        mHandler = <span class="hljs-keyword">new</span> Handler(mHandlerCallback);
+        mInflateThread = InflateThread.getInstance();
+    }
+</code></pre>
+<ol>
+<li><p>&#x6784;&#x5EFA;mInflater&#xFF0C;&#x5B83;&#x662F;&#x771F;&#x6B63;&#x52A0;&#x8F7D;&#x5E03;&#x5C40;&#x7684;Inflater;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BasicInflater</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">LayoutInflater</span> </span>{
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String[] sClassPrefixList = {
+            <span class="hljs-string">&quot;android.widget.&quot;</span>,
+            <span class="hljs-string">&quot;android.webkit.&quot;</span>,
+            <span class="hljs-string">&quot;android.app.&quot;</span>
+        };
+
+        BasicInflater(Context context) {
+            <span class="hljs-keyword">super</span>(context);
+        }
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> LayoutInflater <span class="hljs-title">cloneInContext</span><span class="hljs-params">(Context newContext)</span> </span>{
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BasicInflater(newContext);
+        }
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-function"><span class="hljs-keyword">protected</span> View <span class="hljs-title">onCreateView</span><span class="hljs-params">(String name, AttributeSet attrs)</span> <span class="hljs-keyword">throws</span> ClassNotFoundException </span>{
+            <span class="hljs-keyword">for</span> (String prefix : sClassPrefixList) {
+                <span class="hljs-keyword">try</span> {
+                    View view = createView(name, prefix, attrs);
+                    <span class="hljs-keyword">if</span> (view != <span class="hljs-keyword">null</span>) {
+                        <span class="hljs-keyword">return</span> view;
+                    }
+                } <span class="hljs-keyword">catch</span> (ClassNotFoundException e) {
+                    <span class="hljs-comment">// In this case we want to let the base class take a crack</span>
+                    <span class="hljs-comment">// at it.</span>
+                }
+            }
+
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.onCreateView(name, attrs);
+        }
+    }
+</code></pre>
+</li>
+<li><p>&#x6784;&#x5EFA;mHandler&#xFF0C;&#x5411;&#x4E3B;&#x7EBF;&#x7A0B;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x56DE;&#x8C03;</p>
+<p>&#x7531;&#x4E8E;&#x521B;&#x5EFA;AsyncLayoutInflater&#x5FC5;&#x987B;&#x662F;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#xFF0C;&#x6240;&#x4EE5;Handler&#x4E0D;&#x9700;&#x8981;&#x6307;&#x5B9A;Looper&#xFF0C;&#x4E5F;&#x4E00;&#x5B9A;&#x662F;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x3002;</p>
+<p>Handler&#x4E2D;&#x63A5;&#x6536;&#x4E00;&#x4E2A;Callback&#xFF0C;&#x7528;&#x4E8E;&#x56DE;&#x8C03;&#x4E3B;&#x7EBF;&#x7A0B;&#x3002;</p>
+<pre><code class="lang-java">    <span class="hljs-keyword">private</span> Callback mHandlerCallback = <span class="hljs-keyword">new</span> Callback() {
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">handleMessage</span><span class="hljs-params">(Message msg)</span> </span>{
+            InflateRequest request = (InflateRequest) msg.obj;
+            <span class="hljs-keyword">if</span> (request.view == <span class="hljs-keyword">null</span>) {
+                request.view = mInflater.inflate(
+                        request.resid, request.parent, <span class="hljs-keyword">false</span>);
+            }
+            request.callback.onInflateFinished(
+                    request.view, request.resid, request.parent);
+            mInflateThread.releaseRequest(request);
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        }
+    };
+</code></pre>
+<p>&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;callback&#x4E2D;&#x5982;&#x679C;&#x5F02;&#x6B65;&#x52A0;&#x8F7D;xml&#x5931;&#x8D25;&#xFF0C;&#x5219;&#x4F1A;&#x4F7F;&#x7528;&#x4E3B;&#x7EBF;&#x7A0B;&#x518D;&#x6B21;inflate&#x5E03;&#x5C40;&#xFF0C;&#x8FD9;&#x662F;&#x4E00;&#x79CD;&#x56DE;&#x9000;&#x7684;&#x673A;&#x5236;&#xFF08;&#x89C1;if&#x5224;&#x65AD;&#xFF09;&#x3002;</p>
+</li>
+<li><p>&#x6784;&#x5EFA;&#x5F02;&#x6B65;&#x7EBF;&#x7A0B;InflateThread</p>
+<pre><code class="lang-java"> <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">InflateThread</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span> </span>{
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> InflateThread sInstance;
+        <span class="hljs-keyword">static</span> {
+            sInstance = <span class="hljs-keyword">new</span> InflateThread();
+            sInstance.start();
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> InflateThread <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> sInstance;
+        }
+
+        <span class="hljs-keyword">private</span> ArrayBlockingQueue&lt;InflateRequest&gt; mQueue = <span class="hljs-keyword">new</span> ArrayBlockingQueue&lt;&gt;(<span class="hljs-number">10</span>);
+        <span class="hljs-keyword">private</span> SynchronizedPool&lt;InflateRequest&gt; mRequestPool = <span class="hljs-keyword">new</span> SynchronizedPool&lt;&gt;(<span class="hljs-number">10</span>);
+
+        <span class="hljs-comment">// Extracted to its own method to ensure locals have a constrained liveness</span>
+        <span class="hljs-comment">// scope by the GC. This is needed to avoid keeping previous request references</span>
+        <span class="hljs-comment">// alive for an indeterminate amount of time, see b/33158143 for details</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">runInner</span><span class="hljs-params">()</span> </span>{
+            InflateRequest request;
+            <span class="hljs-keyword">try</span> {
+                request = mQueue.take();
+            } <span class="hljs-keyword">catch</span> (InterruptedException ex) {
+                <span class="hljs-comment">// Odd, just continue</span>
+                Log.w(TAG, ex);
+                <span class="hljs-keyword">return</span>;
+            }
+
+            <span class="hljs-keyword">try</span> {
+                request.view = request.inflater.mInflater.inflate(
+                        request.resid, request.parent, <span class="hljs-keyword">false</span>);
+            } <span class="hljs-keyword">catch</span> (RuntimeException ex) {
+                <span class="hljs-comment">// Probably a Looper failure, retry on the UI thread</span>
+                Log.w(TAG, <span class="hljs-string">&quot;Failed to inflate resource in the background! Retrying on the UI&quot;</span>
+                        + <span class="hljs-string">&quot; thread&quot;</span>, ex);
+            }
+            Message.obtain(request.inflater.mHandler, <span class="hljs-number">0</span>, request)
+                    .sendToTarget();
+        }
+
+        <span class="hljs-meta">@Override</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) {
+                runInner();
+            }
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> InflateRequest <span class="hljs-title">obtainRequest</span><span class="hljs-params">()</span> </span>{
+            InflateRequest obj = mRequestPool.acquire();
+            <span class="hljs-keyword">if</span> (obj == <span class="hljs-keyword">null</span>) {
+                obj = <span class="hljs-keyword">new</span> InflateRequest();
+            }
+            <span class="hljs-keyword">return</span> obj;
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">releaseRequest</span><span class="hljs-params">(InflateRequest obj)</span> </span>{
+            obj.callback = <span class="hljs-keyword">null</span>;
+            obj.inflater = <span class="hljs-keyword">null</span>;
+            obj.parent = <span class="hljs-keyword">null</span>;
+            obj.resid = <span class="hljs-number">0</span>;
+            obj.view = <span class="hljs-keyword">null</span>;
+            mRequestPool.release(obj);
+        }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">enqueue</span><span class="hljs-params">(InflateRequest request)</span> </span>{
+            <span class="hljs-keyword">try</span> {
+                mQueue.put(request);
+            } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(
+                        <span class="hljs-string">&quot;Failed to enqueue async inflate request&quot;</span>, e);
+            }
+        }
+    }
+</code></pre>
+<p>&#x5F02;&#x6B65;&#x7EBF;&#x7A0B;&#x5355;&#x4F8B;&#x5B9E;&#x73B0;&#xFF08;static&#x5F00;&#x542F;&#x7EBF;&#x7A0B;&#x6267;&#x884C;&#xFF09;&#xFF0C;&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x961F;&#x5217;&#xFF0C;run&#x65B9;&#x6CD5;&#x4E0D;&#x65AD;&#x4ECE;&#x961F;&#x5217;&#x4E2D;&#x53D6;&#x51FA;Reqesut&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF0C;Request&#x5C31;&#x662F;&#x6570;&#x636E;&#x7684;&#x5C01;&#x88C5;&#x3002;</p>
+<p>runInner&#x4E2D;&#x4E5F;&#x662F;&#x901A;&#x8FC7;mInflater&#x52A0;&#x8F7D;&#x5E03;&#x5C40;&#xFF0C;&#x552F;&#x4E00;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x5B83;&#x662F;&#x5728;&#x5DE5;&#x4F5C;&#x7EBF;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x5BF9;&#x8C61;&#x6C60;&#xFF0C;&#x7F13;&#x5B58;&#x5BF9;&#x8C61;&#x7684;&#x5B9E;&#x73B0;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">private</span> SynchronizedPool&lt;InflateRequest&gt; mRequestPool = <span class="hljs-keyword">new</span> SynchronizedPool&lt;&gt;(<span class="hljs-number">10</span>);
+</code></pre>
+<p>&#x6E90;&#x7801;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x67E5;&#x770B;&#x3002;</p>
+<p><strong>acquire&#x65B9;&#x6CD5;</strong>&#xFF1A;&#x4ECE;&#x5BF9;&#x8C61;&#x6C60;&#x53D6;&#x51FA;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF1B;</p>
+<p><strong>release&#x65B9;&#x6CD5;</strong>&#xFF1A;&#x5C06;&#x5BF9;&#x8C61;&#x7F13;&#x5B58;&#x5230;&#x5BF9;&#x8C61;&#x6C60;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#xFF0C;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#xFF1B;</p>
+</li>
+<li><p>inflate&#x65B9;&#x6CD5;</p>
+<pre><code class="lang-java">    <span class="hljs-meta">@UiThread</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">inflate</span><span class="hljs-params">(@LayoutRes <span class="hljs-keyword">int</span> resid, @Nullable ViewGroup parent,
+            @NonNull OnInflateFinishedListener callback)</span> </span>{
+        <span class="hljs-keyword">if</span> (callback == <span class="hljs-keyword">null</span>) {
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException(<span class="hljs-string">&quot;callback argument may not be null!&quot;</span>);
+        }
+        InflateRequest request = mInflateThread.obtainRequest();
+        request.inflater = <span class="hljs-keyword">this</span>;
+        request.resid = resid;
+        request.parent = parent;
+        request.callback = callback;
+        mInflateThread.enqueue(request);
+    }
+</code></pre>
+<p>&#x8BE5;&#x65B9;&#x6CD5;&#x5728;&#x7EBF;&#x7A0B;&#x4E2D;&#x6267;&#x884C;&#xFF0C;&#x901A;&#x8FC7;&#x5C01;&#x88C5;&#x6570;&#x636E;request&#xFF0C;&#x52A0;&#x5165;&#x5230;&#x7684;&#x7EBF;&#x7A0B;&#x7684;&#x961F;&#x5217;&#x4E2D;&#x6267;&#x884C;&#x3002;</p>
+</li>
+</ol>
+<h3 id="&#x7F3A;&#x9677;">&#x7F3A;&#x9677;</h3>
+<ol>
+<li><p>&#x9AD8;&#x7248;&#x672C;&#x7279;&#x6027;&#x4E0D;&#x80FD;&#x517C;&#x5BB9;&#x4F4E;&#x7248;&#x672C;&#xFF0C;&#x5982;AppCompat&#x662F;&#x901A;&#x8FC7;&#x5BF9;&#x5E94;&#x7684;&#x7EC4;&#x4EF6;&#x8FDB;&#x884C;&#x517C;&#x5BB9;&#xFF0C;&#x4F46;&#x662F;AsyncLayoutInflater&#x5E76;&#x6CA1;&#x6709;&#x505A;&#x76F8;&#x5173;&#x7684;&#x517C;&#x5BB9;&#x64CD;&#x4F5C;&#xFF1B;</p>
+<p><strong>&#x5982;&#x4F55;&#x89E3;&#x51B3;&#x517C;&#x5BB9;&#x95EE;&#x9898;&#xFF1F;</strong></p>
+<p>&#x53EF;&#x4EE5;&#x81EA;&#x5B9A;&#x4E49;AsyncLayoutInflater&#xFF1A;&#x7531;&#x4E8E;AsyncLayoutInflater&#x662F;final&#xFF0C;&#x5E76;&#x4E0D;&#x80FD;&#x7EE7;&#x627F;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x62F7;&#x8D1D;&#x4E00;&#x4EFD;AsyncLayoutInflater&#xFF0C;&#x7136;&#x540E;&#x5728;Inflater&#x4E2D;&#x8FDB;&#x884C;&#x5904;&#x7406;&#xFF08;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x7CFB;&#x7EDF;&#x76F8;&#x5E94;&#x7684;&#x517C;&#x5BB9;&#x5904;&#x7406;&#xFF09;&#x3002;</p>
+</li>
+<li><p>&#x4E0D;&#x80FD;&#x8BBE;&#x7F6E;Factory&#xFF1B;</p>
+<p>&#x540C;&#x6837;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x5B9A;&#x4E49;AsyncLayoutInflater&#x6765;&#x8FDB;&#x884C;&#x89E3;&#x51B3;&#x3002;</p>
+</li>
+</ol>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="如何获取界面布局耗时.html" class="navigation navigation-prev " aria-label="Previous page: 【二】如何获取界面布局耗时">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="X2C.html" class="navigation navigation-next " aria-label="Next page: 【四】X2C">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"【三】AsyncLayoutInflater","level":"1.4.3","depth":2,"next":{"title":"【四】X2C","level":"1.4.4","depth":2,"path":"AppLayout/X2C.md","ref":"AppLayout/X2C.md","articles":[]},"previous":{"title":"【二】如何获取界面布局耗时","level":"1.4.2","depth":2,"path":"AppLayout/如何获取界面布局耗时.md","ref":"AppLayout/如何获取界面布局耗时.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"AppLayout/AsyncLayoutInflater.md","mtime":"2019-11-30T05:43:02.478Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-30T07:54:27.971Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

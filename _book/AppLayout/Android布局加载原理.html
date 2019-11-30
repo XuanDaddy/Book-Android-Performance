@@ -1,0 +1,845 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>【一】Android布局加载原理 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="如何获取界面布局耗时.html" />
+    
+    
+    <link rel="prev" href="./" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Android性能优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../AppLanuch/">
+            
+                <a href="../AppLanuch/">
+            
+                    
+                    App启动优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../AppLanuch/启动分类.html">
+            
+                <a href="../AppLanuch/启动分类.html">
+            
+                    
+                    【一】启动分类
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../AppLanuch/启动测量方式.html">
+            
+                <a href="../AppLanuch/启动测量方式.html">
+            
+                    
+                    【二】启动测量方式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../AppLanuch/启动优化工具.html">
+            
+                <a href="../AppLanuch/启动优化工具.html">
+            
+                    
+                    【三】启动优化工具
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../AppLanuch/启动优化方向.html">
+            
+                <a href="../AppLanuch/启动优化方向.html">
+            
+                    
+                    【四】启动优化方向
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../AppMerory/">
+            
+                <a href="../AppMerory/">
+            
+                    
+                    App内存优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../AppMerory/Memory-Profiler.html">
+            
+                <a href="../AppMerory/Memory-Profiler.html">
+            
+                    
+                    【一】Memory Profiler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../AppMerory/Memory-Analyzer.html">
+            
+                <a href="../AppMerory/Memory-Analyzer.html">
+            
+                    
+                    【二】Memory Analyzer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../AppMerory/LeakCanary.html">
+            
+                <a href="../AppMerory/LeakCanary.html">
+            
+                    
+                    【三】LeakCanary
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../AppMerory/内存抖动.html">
+            
+                <a href="../AppMerory/内存抖动.html">
+            
+                    
+                    【四】内存抖动
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../AppMerory/内存泄露.html">
+            
+                <a href="../AppMerory/内存泄露.html">
+            
+                    
+                    【五】内存泄露
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    App布局优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.4.1" data-path="Android布局加载原理.html">
+            
+                <a href="Android布局加载原理.html">
+            
+                    
+                    【一】Android布局加载原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="如何获取界面布局耗时.html">
+            
+                <a href="如何获取界面布局耗时.html">
+            
+                    
+                    【二】如何获取界面布局耗时
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="AsyncLayoutInflater.html">
+            
+                <a href="AsyncLayoutInflater.html">
+            
+                    
+                    【三】AsyncLayoutInflater
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="X2C.html">
+            
+                <a href="X2C.html">
+            
+                    
+                    【四】X2C
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="视图绘制优化.html">
+            
+                <a href="视图绘制优化.html">
+            
+                    
+                    【五】视图绘制优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../AppCarton/">
+            
+                <a href="../AppCarton/">
+            
+                    
+                    App卡顿优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../AppThread/">
+            
+                <a href="../AppThread/">
+            
+                    
+                    App线程优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" data-path="../AppNetwork/">
+            
+                <a href="../AppNetwork/">
+            
+                    
+                    App网络优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="../AppBattery/">
+            
+                <a href="../AppBattery/">
+            
+                    
+                    App电量优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" data-path="../AppSmall/">
+            
+                <a href="../AppSmall/">
+            
+                    
+                    App瘦身优化
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../AppSmall/代码瘦身.html">
+            
+                <a href="../AppSmall/代码瘦身.html">
+            
+                    
+                    【一】代码瘦身
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../AppSmall/资源瘦身.html">
+            
+                <a href="../AppSmall/资源瘦身.html">
+            
+                    
+                    【二】资源瘦身
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../AppSmall/So瘦身.html">
+            
+                <a href="../AppSmall/So瘦身.html">
+            
+                    
+                    【三】So瘦身
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" data-path="../AppStable/">
+            
+                <a href="../AppStable/">
+            
+                    
+                    App稳定性优化
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >【一】Android布局加载原理</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x3010;&#x4E00;&#x3011;android&#x5E03;&#x5C40;&#x52A0;&#x8F7D;&#x539F;&#x7406;">&#x3010;&#x4E00;&#x3011;Android&#x5E03;&#x5C40;&#x52A0;&#x8F7D;&#x539F;&#x7406;</h1>
+<h3 id="&#x5E03;&#x5C40;&#x52A0;&#x8F7D;&#x6D41;&#x7A0B;&#xFF08;xml&#xFF09;">&#x5E03;&#x5C40;&#x52A0;&#x8F7D;&#x6D41;&#x7A0B;&#xFF08;xml&#xFF09;</h3>
+<ol>
+<li><p>AppCompatActivity.setContentView(int resId)</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Override</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setContentView</span><span class="hljs-params">(@LayoutRes <span class="hljs-keyword">int</span> layoutResID)</span> </span>{
+   getDelegate().setContentView(layoutResID);
+}
+</code></pre>
+</li>
+<li><p>AppCompatDelegate.setContentView(int resId):&#x62BD;&#x8C61;&#x7C7B;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setContentView</span><span class="hljs-params">(@LayoutRes <span class="hljs-keyword">int</span> resId)</span></span>;
+</code></pre>
+</li>
+<li><p>AppCompatDelegateImpl.setContentView(int resId):&#x5B9E;&#x73B0;&#x7C7B;</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Override</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setContentView</span><span class="hljs-params">(<span class="hljs-keyword">int</span> resId)</span> </span>{
+   ensureSubDecor();
+   ViewGroup contentParent = (ViewGroup) mSubDecor.findViewById(android.R.id.content);
+   contentParent.removeAllViews();
+   LayoutInflater.from(mContext).inflate(resId, contentParent);
+   mOriginalWindowCallback.onContentChanged();
+}
+</code></pre>
+<p>&#x52A0;&#x8F7D;&#x5E03;&#x5C40;&#x4F7F;&#x7528;&#x7684;LayoutInflater</p>
+</li>
+<li><p>LayoutInflater.inflate()</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> View <span class="hljs-title">inflate</span><span class="hljs-params">(@LayoutRes <span class="hljs-keyword">int</span> resource, @Nullable ViewGroup root, <span class="hljs-keyword">boolean</span> attachToRoot)</span> </span>{
+        <span class="hljs-keyword">final</span> Resources res = getContext().getResources();
+        <span class="hljs-keyword">if</span> (DEBUG) {
+            Log.d(TAG, <span class="hljs-string">&quot;INFLATING from resource: \&quot;&quot;</span> + res.getResourceName(resource) + <span class="hljs-string">&quot;\&quot; (&quot;</span>
+                    + Integer.toHexString(resource) + <span class="hljs-string">&quot;)&quot;</span>);
+        }
+
+        <span class="hljs-keyword">final</span> XmlResourceParser parser = res.getLayout(resource);
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">return</span> inflate(parser, root, attachToRoot);
+        } <span class="hljs-keyword">finally</span> {
+            parser.close();
+        }
+    }
+</code></pre>
+<p>&#x8C03;&#x7528; res.getLayout()</p>
+</li>
+<li><p>Resourecs.getLayout()</p>
+<pre><code class="lang-java">    <span class="hljs-function"><span class="hljs-keyword">public</span> XmlResourceParser <span class="hljs-title">getLayout</span><span class="hljs-params">(@LayoutRes <span class="hljs-keyword">int</span> id)</span> <span class="hljs-keyword">throws</span> NotFoundException </span>{
+        <span class="hljs-keyword">return</span> loadXmlResourceParser(id, <span class="hljs-string">&quot;layout&quot;</span>);
+    }
+
+    <span class="hljs-function">XmlResourceParser <span class="hljs-title">loadXmlResourceParser</span><span class="hljs-params">(@AnyRes <span class="hljs-keyword">int</span> id, @NonNull String type)</span>
+            <span class="hljs-keyword">throws</span> NotFoundException </span>{
+        <span class="hljs-keyword">final</span> TypedValue value = obtainTempTypedValue();
+        <span class="hljs-keyword">try</span> {
+            <span class="hljs-keyword">final</span> ResourcesImpl impl = mResourcesImpl;
+            impl.getValue(id, value, <span class="hljs-keyword">true</span>);
+            <span class="hljs-keyword">if</span> (value.type == TypedValue.TYPE_STRING) {
+                <span class="hljs-keyword">return</span> impl.loadXmlResourceParser(value.string.toString(), id,
+                        value.assetCookie, type);
+            }
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NotFoundException(<span class="hljs-string">&quot;Resource ID #0x&quot;</span> + Integer.toHexString(id)
+                    + <span class="hljs-string">&quot; type #0x&quot;</span> + Integer.toHexString(value.type) + <span class="hljs-string">&quot; is not valid&quot;</span>);
+        } <span class="hljs-keyword">finally</span> {
+            releaseTempTypedValue(value);
+        }
+    }
+</code></pre>
+<p>&#x52A0;&#x8F7D;xml&#x6587;&#x4EF6;&#xFF0C;&#x4ECE;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;xml&#x89E3;&#x6790;&#x5668;&#x3002;</p>
+<p><strong>&#x4ECE;xml&#x6587;&#x4EF6;&#x52A0;&#x8F7D;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x8FD9;&#x91CC;&#x5176;&#x5B9E;&#x662F;&#x4E00;&#x4E2A;IO&#x8FC7;&#x7A0B;</strong>&#x3002;</p>
+</li>
+<li><p>LayoutInflater.createViewFromTag()</p>
+<pre><code class="lang-java">  <span class="hljs-function">View <span class="hljs-title">createViewFromTag</span><span class="hljs-params">(View parent, String name, Context context, AttributeSet attrs,
+            <span class="hljs-keyword">boolean</span> ignoreThemeAttr)</span> </span>{
+        <span class="hljs-keyword">if</span> (name.equals(<span class="hljs-string">&quot;view&quot;</span>)) {
+            name = attrs.getAttributeValue(<span class="hljs-keyword">null</span>, <span class="hljs-string">&quot;class&quot;</span>);
+        }
+
+        <span class="hljs-comment">// Apply a theme wrapper, if allowed and one is specified.</span>
+        <span class="hljs-keyword">if</span> (!ignoreThemeAttr) {
+            <span class="hljs-keyword">final</span> TypedArray ta = context.obtainStyledAttributes(attrs, ATTRS_THEME);
+            <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> themeResId = ta.getResourceId(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+            <span class="hljs-keyword">if</span> (themeResId != <span class="hljs-number">0</span>) {
+                context = <span class="hljs-keyword">new</span> ContextThemeWrapper(context, themeResId);
+            }
+            ta.recycle();
+        }
+
+        <span class="hljs-keyword">if</span> (name.equals(TAG_1995)) {
+            <span class="hljs-comment">// Let&apos;s party like it&apos;s 1995!</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BlinkLayout(context, attrs);
+        }
+
+        <span class="hljs-keyword">try</span> {
+            View view;
+            <span class="hljs-keyword">if</span> (mFactory2 != <span class="hljs-keyword">null</span>) {
+                view = mFactory2.onCreateView(parent, name, context, attrs);
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (mFactory != <span class="hljs-keyword">null</span>) {
+                view = mFactory.onCreateView(name, context, attrs);
+            } <span class="hljs-keyword">else</span> {
+                view = <span class="hljs-keyword">null</span>;
+            }
+
+            <span class="hljs-keyword">if</span> (view == <span class="hljs-keyword">null</span> &amp;&amp; mPrivateFactory != <span class="hljs-keyword">null</span>) {
+                view = mPrivateFactory.onCreateView(parent, name, context, attrs);
+            }
+
+            <span class="hljs-keyword">if</span> (view == <span class="hljs-keyword">null</span>) {
+                <span class="hljs-keyword">final</span> Object lastContext = mConstructorArgs[<span class="hljs-number">0</span>];
+                mConstructorArgs[<span class="hljs-number">0</span>] = context;
+                <span class="hljs-keyword">try</span> {
+                    <span class="hljs-keyword">if</span> (-<span class="hljs-number">1</span> == name.indexOf(<span class="hljs-string">&apos;.&apos;</span>)) {
+                        view = onCreateView(parent, name, attrs);
+                    } <span class="hljs-keyword">else</span> {
+                        view = createView(name, <span class="hljs-keyword">null</span>, attrs);
+                    }
+                } <span class="hljs-keyword">finally</span> {
+                    mConstructorArgs[<span class="hljs-number">0</span>] = lastContext;
+                }
+            }
+
+            <span class="hljs-keyword">return</span> view;
+        } <span class="hljs-keyword">catch</span> (InflateException e) {
+            <span class="hljs-keyword">throw</span> e;
+
+        } <span class="hljs-keyword">catch</span> (ClassNotFoundException e) {
+            <span class="hljs-keyword">final</span> InflateException ie = <span class="hljs-keyword">new</span> InflateException(attrs.getPositionDescription()
+                    + <span class="hljs-string">&quot;: Error inflating class &quot;</span> + name, e);
+            ie.setStackTrace(EMPTY_STACK_TRACE);
+            <span class="hljs-keyword">throw</span> ie;
+
+        } <span class="hljs-keyword">catch</span> (Exception e) {
+            <span class="hljs-keyword">final</span> InflateException ie = <span class="hljs-keyword">new</span> InflateException(attrs.getPositionDescription()
+                    + <span class="hljs-string">&quot;: Error inflating class &quot;</span> + name, e);
+            ie.setStackTrace(EMPTY_STACK_TRACE);
+            <span class="hljs-keyword">throw</span> ie;
+        }
+    }
+</code></pre>
+<p>&#x4F18;&#x5148;&#x4F7F;&#x7528;mFactory2&#x8FDB;&#x884C;&#x521B;&#x5EFA;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#xFF0C;&#x4F7F;&#x7528;mFactory&#x8FDB;&#x884C;&#x521B;&#x5EFA;&#xFF1B;</p>
+<p>mPrivateFactory&#x53EA;&#x4F1A;&#x7528;&#x4E8E;&#x5904;&#x7406;fragment&#x6807;&#x7B7E;&#xFF1B;</p>
+<p>&#x5982;&#x679C;View&#x4F9D;&#x7136;&#x4E3A;&#x7A7A;&#xFF0C;&#x4F1A;&#x8C03;&#x7528;LayoutInflater.createView&#x901A;&#x8FC7;&#x53CD;&#x6620;&#x8FDB;&#x884C;&#x521B;&#x5EFA;&#xFF1B;</p>
+<p><strong>&#x53CD;&#x5C04;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x6027;&#x80FD;&#x74F6;&#x9888;</strong></p>
+</li>
+<li><p>LayoutInflater.createView()</p>
+<pre><code class="lang-java">...
+ <span class="hljs-keyword">final</span> View view = constructor.newInstance(args);
+            <span class="hljs-keyword">if</span> (view <span class="hljs-keyword">instanceof</span> ViewStub) {
+                <span class="hljs-comment">// Use the same context when inflating ViewStub later.</span>
+                <span class="hljs-keyword">final</span> ViewStub viewStub = (ViewStub) view;
+                viewStub.setLayoutInflater(cloneInContext((Context) args[<span class="hljs-number">0</span>]));
+            }
+            mConstructorArgs[<span class="hljs-number">0</span>] = lastContext;
+            <span class="hljs-keyword">return</span> view;
+</code></pre>
+</li>
+</ol>
+<h3 id="layoutinflaterfactory">LayoutInflater.Factory</h3>
+<ol>
+<li>&#x5B83;&#x662F;LayoutInflater&#x521B;&#x5EFA;View&#x7684;&#x4E00;&#x4E2A;Hook;</li>
+<li>&#x5B83;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x5B9A;&#x5236;&#x521B;&#x5EFA;View&#x7684;&#x8FC7;&#x7A0B;&#xFF1A;&#x5168;&#x5C40;&#x66FF;&#x6362;&#x81EA;&#x5B9A;&#x4E49;TextView&#x7B49;&#xFF1B;</li>
+<li><strong>Factory2</strong>&#x7EE7;&#x627F;&#x81EA;<strong>Factory</strong>&#xFF1B;</li>
+</ol>
+<pre><code class="lang-java">    <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Factory</span> </span>{
+        <span class="hljs-comment">/**
+         * Hook you can supply that is called when inflating from a LayoutInflater.
+         * You can use this to customize the tag names available in your XML
+         * layout files.
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> View <span class="hljs-title">onCreateView</span><span class="hljs-params">(String name, Context context, AttributeSet attrs)</span></span>;
+    }
+</code></pre>
+<p>name&#x5BF9;&#x5E94;&#x7684;&#x5C31;&#x662F;View&#x540D;&#x79F0;&#xFF0C;&#x5982;&quot;TextView&quot;&#xFF0C;&quot;ImageView&quot;&#x7B49;&#x3002;</p>
+<pre><code class="lang-java">    <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Factory2</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Factory</span> </span>{
+        <span class="hljs-comment">/**
+         * Version of {<span class="hljs-doctag">@link</span> #onCreateView(String, Context, AttributeSet)}
+         * that also supplies the parent that the view created view will be
+         * placed in.
+         */</span>
+        <span class="hljs-function"><span class="hljs-keyword">public</span> View <span class="hljs-title">onCreateView</span><span class="hljs-params">(View parent, String name, Context context, AttributeSet attrs)</span></span>;
+    }
+</code></pre>
+<p>&#x76F8;&#x6BD4;Fatory&#xFF0C;Factory2&#x4E2D;&#x7684;onCreateView&#x8FD4;&#x56DE;&#x4E86;parent&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x521B;&#x5EFA;&#x7684;View&#x7684;&#x7236;&#x5E03;&#x5C40;&#x3002;</p>
+<h3 id="appcompatactivity&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;factory">AppCompatActivity&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;Factory</h3>
+<p>&#x5728;Activity&#x4E2D;&#x5E76;&#x672A;&#x8BBE;&#x7F6E;factory&#xFF0C;&#x4F46;&#x5728;AppCompatActivity&#x4E2D;onCreate&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E86;factory&#x3002;</p>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x8BBE;&#x7F6E;factory&#xFF0C;&#x4F1A;&#x5BFC;&#x81F4;&#x7CFB;&#x7EDF;&#x9ED8;&#x8BA4;&#x7684;factory&#x65E0;&#x6CD5;&#x4F7F;&#x7528;&#x3002;</p>
+<pre><code>@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+    getDelegate().installViewFactory();
+    //...
+}
+</code></pre><pre><code class="lang-java"><span class="hljs-meta">@Override</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">installViewFactory</span><span class="hljs-params">()</span> </span>{
+    LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+    <span class="hljs-keyword">if</span> (layoutInflater.getFactory() == <span class="hljs-keyword">null</span>) {
+        LayoutInflaterCompat.setFactory(layoutInflater, <span class="hljs-keyword">this</span>);
+    } <span class="hljs-keyword">else</span> {
+        Log.i(TAG, <span class="hljs-string">&quot;The Activity&apos;s LayoutInflater already has a Factory installed&quot;</span>
+                + <span class="hljs-string">&quot; so we can not install AppCompat&apos;s&quot;</span>);
+    }
+}
+</code></pre>
+<p>AppCompatActivity&#x7684;setFactory&#x4E5F;&#x662F;&#x60F3;&#x6839;&#x636E;name&#x53BB;&#x751F;&#x6210;&#x4E00;&#x4E9B;&#x7C7B;&#xFF0C;&#x5927;&#x5BB6;&#x8FD8;&#x8BB0;&#x5F97;&#xFF0C;&#x66F4;&#x65B0;v7&#x5305;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5FFD;&#x7136;&#x6211;&#x4EEC;&#x7684;TextView&#x5C31;&#x652F;&#x6301;&#x4E86;&#x4E00;&#x4E9B;&#x5C5E;&#x6027;&#xFF0C;&#x6BD4;&#x5982;<code>tint</code>&#x5C5E;&#x6027;&#xFF0C;&#x4EE5;&#x524D;&#x662F;&#x4E0D;&#x652F;&#x6301;&#x7684;&#xFF0C;&#x600E;&#x4E48;&#x80FD;&#x591F;&#x505A;&#x5230;&#x4F7F;&#x7528;v7&#x5305;&#xFF0C;&#x7136;&#x540E;&#x5C31;&#x80FD;&#x652F;&#x6301;&#x4E14;&#x5411;&#x4E0B;&#x517C;&#x5BB9;&#x7684;&#x5462;&#xFF1F;</p>
+<pre><code class="lang-java"><span class="hljs-keyword">switch</span> (name) {
+    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;TextView&quot;</span>:
+        view = <span class="hljs-keyword">new</span> AppCompatTextView(context, attrs);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;ImageView&quot;</span>:
+        view = <span class="hljs-keyword">new</span> AppCompatImageView(context, attrs);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;Button&quot;</span>:
+        view = <span class="hljs-keyword">new</span> AppCompatButton(context, attrs);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;EditText&quot;</span>:
+        view = <span class="hljs-keyword">new</span> AppCompatEditText(context, attrs);
+        <span class="hljs-keyword">break</span>;
+   <span class="hljs-comment">//...</span>
+}
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7CFB;&#x7EDF;&#x5176;&#x5B9E;&#x662F;&#x5229;&#x7528;setFactory&#xFF0C;&#x7792;&#x7740;&#x6211;&#x4EEC;&#x628A;TextView&#x7B49;&#x7C7B;&#x65E9;&#x5C31;&#x6362;&#x6210;AppCompatTextView&#x7B49;&#x7C7B;&#x4E86;&#x3002;</p>
+<h4 id="&#x5982;&#x4F55;&#x89E3;&#x51B3;&#x81EA;&#x5B9A;&#x4E49;factory&#x8986;&#x76D6;&#x7CFB;&#x7EDF;&#x9ED8;&#x8BA4;">&#x5982;&#x4F55;&#x89E3;&#x51B3;&#x81EA;&#x5B9A;&#x4E49;factory&#x8986;&#x76D6;&#x7CFB;&#x7EDF;&#x9ED8;&#x8BA4;</h4>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x81EA;&#x5B9A;&#x4E49;Factory&#x4E2D;&#x5904;&#x7406;&#x81EA;&#x5DF1;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x9ED8;&#x8BA4;&#x7684;&#x4F9D;&#x7136;&#x4EA4;&#x7ED9;&#x7CFB;&#x7EDF;&#x5904;&#x7406;(delegate)&#x3002;</p>
+<p>&#x81EA;&#x5B9A;&#x4E49;Factory&#x9700;&#x8981;&#x5728;super.onCreate()&#x4E4B;&#x524D;&#x8FDB;&#x884C;&#x914D;&#x7F6E;&#x3002;</p>
+<pre><code class="lang-java">LayoutInflaterCompat.setFactory(LayoutInflater.from(<span class="hljs-keyword">this</span>), <span class="hljs-keyword">new</span> LayoutInflaterFactory()
+{
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> View <span class="hljs-title">onCreateView</span><span class="hljs-params">(View parent, String name, Context context, AttributeSet attrs)</span>
+    </span>{
+        <span class="hljs-comment">//&#x4F60;&#x53EF;&#x4EE5;&#x5728;&#x8FD9;&#x91CC;&#x76F4;&#x63A5;new&#x81EA;&#x5B9A;&#x4E49;View</span>
+
+        <span class="hljs-comment">//&#x4F60;&#x53EF;&#x4EE5;&#x5728;&#x8FD9;&#x91CC;&#x5C06;&#x7CFB;&#x7EDF;&#x7C7B;&#x66FF;&#x6362;&#x4E3A;&#x81EA;&#x5B9A;&#x4E49;View</span>
+
+         <span class="hljs-comment">//appcompat &#x521B;&#x5EFA;view&#x4EE3;&#x7801;</span>
+        AppCompatDelegate delegate = getDelegate();
+        View view = delegate.createView(parent, name, context, attrs);
+
+        <span class="hljs-keyword">return</span> view;
+    }
+});
+</code></pre>
+<h3 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h3>
+<ul>
+<li>&#x52A0;&#x8F7D;&#x6D41;&#x7A0B;</li>
+</ul>
+<p>setContentView&#x52A0;&#x8F7D;xml&#x6587;&#x4EF6;&#xFF0C;&#x8FD4;&#x56DE;xml&#x89E3;&#x6790;&#x5668;&#xFF0C;&#x901A;&#x8FC7;&#x89E3;&#x6790;&#x5668;&#x5224;&#x65AD;&#x662F;&#x5426;&#x5B58;&#x5728;factory&#xFF0C;&#x5982;&#x679C;&#x5B58;&#x5728;&#xFF0C;&#x4F7F;&#x7528;factory&#x6784;&#x5EFA;View&#x5B9E;&#x4F8B;&#xFF08;AppcompatActivity&#x5DF2;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E86;factory&#xFF0C;Activity&#x5E76;&#x6CA1;&#x6709;&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x672A;&#x8BBE;&#x7F6E;factory&#x6216;View&#x4E3A;&#x7A7A;&#xFF0C;&#x4F7F;&#x7528;&#x53CD;&#x5C04;&#x6784;&#x5EFA;View&#x5B9E;&#x4F8B;&#x3002;</p>
+<ul>
+<li>&#x6027;&#x80FD;&#x74F6;&#x9888;<ul>
+<li>&#x52A0;&#x8F7D;xml&#x6587;&#x4EF6;&#xFF0C;IO&#x64CD;&#x4F5C;&#xFF1B;</li>
+<li>&#x5982;&#x679C;&#x672A;&#x914D;&#x7F6E;factory&#xFF0C;&#x53CD;&#x5C04;&#x6784;&#x5EFA;View&#x5B9E;&#x4F8B;&#xFF1B;</li>
+</ul>
+</li>
+</ul>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="./" class="navigation navigation-prev " aria-label="Previous page: App布局优化">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="如何获取界面布局耗时.html" class="navigation navigation-next " aria-label="Next page: 【二】如何获取界面布局耗时">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"【一】Android布局加载原理","level":"1.4.1","depth":2,"next":{"title":"【二】如何获取界面布局耗时","level":"1.4.2","depth":2,"path":"AppLayout/如何获取界面布局耗时.md","ref":"AppLayout/如何获取界面布局耗时.md","articles":[]},"previous":{"title":"App布局优化","level":"1.4","depth":1,"path":"AppLayout/README.md","ref":"AppLayout/README.md","articles":[{"title":"【一】Android布局加载原理","level":"1.4.1","depth":2,"path":"AppLayout/Android布局加载原理.md","ref":"AppLayout/Android布局加载原理.md","articles":[]},{"title":"【二】如何获取界面布局耗时","level":"1.4.2","depth":2,"path":"AppLayout/如何获取界面布局耗时.md","ref":"AppLayout/如何获取界面布局耗时.md","articles":[]},{"title":"【三】AsyncLayoutInflater","level":"1.4.3","depth":2,"path":"AppLayout/AsyncLayoutInflater.md","ref":"AppLayout/AsyncLayoutInflater.md","articles":[]},{"title":"【四】X2C","level":"1.4.4","depth":2,"path":"AppLayout/X2C.md","ref":"AppLayout/X2C.md","articles":[]},{"title":"【五】视图绘制优化","level":"1.4.5","depth":2,"path":"AppLayout/视图绘制优化.md","ref":"AppLayout/视图绘制优化.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"AppLayout/Android布局加载原理.md","mtime":"2019-11-30T05:43:02.478Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-30T07:54:27.971Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

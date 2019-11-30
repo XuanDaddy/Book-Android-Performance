@@ -23,5 +23,8 @@
 * [App网络优化](AppNetwork/README.md)
 * [App电量优化](AppBattery/README.md)
 * [App瘦身优化](AppSmall/README.md)
+    * [【一】代码瘦身](AppSmall/代码瘦身.md)
+    * [【二】资源瘦身](AppSmall/资源瘦身.md)
+    * [【三】So瘦身](AppSmall/So瘦身.md)
 * [App稳定性优化](AppStable/README.md)
 
